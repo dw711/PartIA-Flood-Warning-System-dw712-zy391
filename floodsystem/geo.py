@@ -7,7 +7,7 @@ geographical data.
 """
 
 from .utils import sorted_by_key  # noqa
-import numpy 
+import numpy
 
 def stations_by_distance(stations: list, p: tuple) -> list:
     answerList = []
