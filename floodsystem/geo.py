@@ -7,24 +7,20 @@ geographical data.
 """
 
 from .utils import sorted_by_key  # noqa
-import math
+import numpy 
 
 def stations_by_distance(stations: list, p: tuple) -> list:
     answerList = []
     for station in stations:
-        station_latitude = math.radians(station.coord[0])
-        station_longitude = math.radians(station.coord[1])
+        station_latitude, station_longitude = numpy.radians(station.coord)
 
-        coord_latitude = math.radians(p[0])
-        coord_longitude = math.radians(p[1])
+        coord_latitude, coord_longitude = numpy.radians(p)
         #taking latitudes and longitudes for harvesine formula
         delta_lat = coord_latitude - station_latitude
         delta_long = coord_longitude - station_longitude
 
-        hav_theta = (math.sin(delta_lat/2))**2 + math.cos(coord_latitude)*math.cos(station_latitude)*((math.sin(delta_long/2))**2)
-        theta = 2*math.asin(math.sqrt(hav_theta))
-
-        assert hav_theta <= 1
+        hav_theta = (numpy.sin(delta_lat/2))**2 + numpy.cos(coord_latitude)*numpy.cos(station_latitude)*((numpy.sin(delta_long/2))**2)
+        theta = 2*numpy.arcsin(numpy.sqrt(hav_theta))
         distance = 6371 * theta
 
         answerTuple = (station, distance)
