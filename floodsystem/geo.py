@@ -29,4 +29,4 @@ def stations_by_distance(stations: list, p: tuple) -> list:
 
         answerTuple = (station, distance)
         answerList.append(answerTuple)
-    sorted_by_key(answerList, 1)
+    return sorted_by_key(answerList, 1)
