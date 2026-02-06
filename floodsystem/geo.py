@@ -36,3 +36,9 @@ def stations_within_radius(stations: list, x:tuple, radius:float) -> list:
         else:
             break
     return stations_within_radius_list
+
+def rivers_with_station(stations: list) -> set:
+    rivers = set()
+    for station in stations:
+        rivers.add(station.river)
+    return rivers
