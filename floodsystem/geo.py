@@ -30,3 +30,13 @@ def stations_by_distance(stations: list, p: tuple) -> list:
         answerTuple = (station, distance)
         answerList.append(answerTuple)
     return sorted_by_key(answerList, 1)
+
+def stations_within_radius(stations: list, x:tuple, radius:float) -> list:
+    stationsByDistanceList = stations_by_distance(stations, x)
+    stations_within_radius_list = []
+    for stationTuple in stationsByDistanceList:
+        if stationTuple[1] < 10:
+            stations_within_radius_list.append(stationTuple[0])
+        else:
+            break
+    return stations_within_radius_list
