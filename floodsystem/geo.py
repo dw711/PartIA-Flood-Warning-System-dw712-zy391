@@ -44,7 +44,12 @@ def rivers_with_station(stations: list) -> set:
     return rivers
 
 def stations_by_river(stations: list) -> dict:
+    rivers = rivers_with_station(stations)
     mapping = {}
-    for station in stations:
-        mapping.update({station.name: station})
+    for river in rivers:
+        station_in_river = []
+        for station in stations:
+            if station.river == river:
+                station_in_river.append(station)
+        mapping.update({station.river: station_in_river})
     return mapping
