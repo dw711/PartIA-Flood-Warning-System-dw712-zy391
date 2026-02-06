@@ -51,5 +51,5 @@ def stations_by_river(stations: list) -> dict:
         for station in stations:
             if station.river == river:
                 station_in_river.append(station)
-        mapping.update({station.river: station_in_river})
+        mapping[river] = station_in_river
     return mapping
