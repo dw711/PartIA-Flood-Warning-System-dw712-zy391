@@ -12,11 +12,11 @@ import math
 def stations_by_distance(stations: list, p: tuple) -> list:
     answerList = []
     for station in stations:
-        station_latitude = station.coord[0]
-        station_longitude = station.coord[1]
+        station_latitude = math.radians(station.coord[0])
+        station_longitude = math.radians(station.coord[1])
 
-        coord_latitude = p[0]
-        coord_longitude = p[1]
+        coord_latitude = math.radians(p[0])
+        coord_longitude = math.radians(p[1])
         #taking latitudes and longitudes for harvesine formula
         delta_lat = coord_latitude - station_latitude
         delta_long = coord_longitude - station_longitude
