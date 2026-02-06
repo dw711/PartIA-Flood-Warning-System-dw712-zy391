@@ -42,3 +42,9 @@ def rivers_with_station(stations: list) -> set:
     for station in stations:
         rivers.add(station.river)
     return rivers
+
+def stations_by_river(stations: list) -> dict:
+    mapping = {}
+    for station in stations:
+        mapping.update({station.name: station})
+    return mapping
