@@ -10,6 +10,9 @@ from .utils import sorted_by_key  # noqa
 import numpy
 
 def stations_by_distance(stations: list, p: tuple) -> list:
+    '''
+    given a list of MonitoringStations, returns a list of tuples of (station, distance), sorted by the distance
+    '''
     answerList = []
     for station in stations:
         station_latitude, station_longitude = numpy.radians(station.coord)
@@ -28,6 +31,9 @@ def stations_by_distance(stations: list, p: tuple) -> list:
     return sorted_by_key(answerList, 1)
 
 def stations_within_radius(stations: list, x:tuple, radius:float) -> list:
+    '''
+    returns a list of stations when given a list of stations, the coordinate of the centre, and a radius in km.
+    '''
     stationsByDistanceList = stations_by_distance(stations, x)
     stations_within_radius_list = []
     for stationTuple in stationsByDistanceList:
@@ -38,12 +44,18 @@ def stations_within_radius(stations: list, x:tuple, radius:float) -> list:
     return stations_within_radius_list
 
 def rivers_with_station(stations: list) -> set:
+    '''
+    returns a set of river names that have a Monitoring Station when given a list of MonitoringStations
+    '''
     rivers = set()
     for station in stations:
         rivers.add(station.river)
     return rivers
 
 def stations_by_river(stations: list) -> dict:
+    '''
+    Returns a dictionary of (river, list of monitoring station in that river), (key, value pairs) when given a list of MonitoringStations
+    '''
     rivers = rivers_with_station(stations)
     mapping = {}
     for river in rivers:
