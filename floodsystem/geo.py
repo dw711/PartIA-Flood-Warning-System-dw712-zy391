@@ -67,6 +67,7 @@ def stations_by_river(stations: list) -> dict:
     return mapping
 
 def rivers_by_station_number(stations, N):
+    '''Return the N rivers with the greatest number of monitoring stations.'''
     river_dict = stations_by_river(stations)
 
     river_counts = []
