@@ -65,3 +65,21 @@ def stations_by_river(stations: list) -> dict:
                 station_in_river.append(station)
         mapping[river] = station_in_river
     return mapping
+
+def rivers_by_station_number(stations, N):
+    river_dict = stations_by_river(stations)
+
+    river_counts = []
+    for river, station_list in river_dict.items():
+        river_counts.append((river, len(station_list)))
+    
+    def get_station_count(item):
+        return item[1]
+    river_counts.sort(key=get_station_count, reverse=True)
+    
+    top_river_counts = []
+    cutoff = int(river_counts[N-1][1])
+    for river_tuple in river_counts:
+        if river_tuple[1] >= cutoff:
+            top_river_counts.append(river_tuple)
+    return top_river_counts
