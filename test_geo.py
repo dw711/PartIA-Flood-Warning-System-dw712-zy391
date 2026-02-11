@@ -14,13 +14,13 @@ def test_stations_by_distance():
 
 def test_stations_within_radius():
     stations = build_station_list()
-    sorted_stations = geo.stations_by_distance()
+    sorted_stations = geo.stations_by_distance(stations, (52.2053, 0.1218))
     radius = 10
     result = geo.stations_within_radius(stations, (52.2053, 0.1218), radius)
     assert isinstance (result, list) #ensures output is a list
     assert result == sorted(result) #ensures output is sorted
     for i in range(len(result)):
-        assert sorted_stations[i][0] < radius
+        assert sorted_stations[i][1] < radius
 
 #Testing rivers_by_station_number
 
