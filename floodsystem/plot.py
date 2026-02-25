@@ -8,8 +8,8 @@ def plot_water_levels(station, dates, levels):
 
     typical_range_list_low = [station.typical_range[0] for i in dates]
     typical_range_list_high = [station.typical_range[1] for i in dates]
-    plt.plot(dates, typical_range_list_low, color = '-r')
-    plt.plot(dates, typical_range_list_high, color= '-g')
+    plt.plot(dates, typical_range_list_low)
+    plt.plot(dates, typical_range_list_high)
 
     # Add axis labels, rotate date labels and add plot title
     plt.xlabel('date')
