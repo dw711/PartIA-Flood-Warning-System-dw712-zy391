@@ -1,6 +1,9 @@
+import numpy
+import matplotlib.dates
 
+def polyfit(dates: list, levels: list, p)->tuple:
+    dates = matplotlib.dates.date2num(dates)
+    coeffs = numpy.polyfit([i-dates[0] for i in dates], levels, p)
+    poly = numpy.poly1d(coeffs)
 
-
-def polyfit(dates, levels, p):
-    pass
-
+    return (poly, dates[0])

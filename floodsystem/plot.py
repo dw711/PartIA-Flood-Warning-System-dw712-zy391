@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
-
-
+import matplotlib.dates as mpldates
+import analysis
 
 def plot_water_levels(station, dates, levels):
     plt.plot(dates, levels)
@@ -21,4 +21,21 @@ def plot_water_levels(station, dates, levels):
     plt.tight_layout()  # This makes sure plot does not cut off date labels
 
     plt.show()
-        
+
+def plot_water_level_with_fit(station, dates, levels, p):
+    poly, d0 = analysis.polyfit(dates, levels, p)
+    fixed_dates = mpldates.date2num(dates)-d0
+    fittedy = poly(fixed_dates)
+    plt.plot(fixed_dates, levels)
+    plt.plot(fixed_dates, fittedy)
+
+    # Add axis labels, rotate date labels and add plot title
+    plt.xlabel('date')
+    plt.ylabel('water level (m)')
+    plt.xticks(rotation=45)
+    plt.title("Station" + station.name)
+
+    # Display plot
+    plt.tight_layout()  # This makes sure plot does not cut off date labels
+
+    plt.show()
