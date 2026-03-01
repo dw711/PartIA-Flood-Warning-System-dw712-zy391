@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 import matplotlib.dates as mpldates
-import analysis
+import floodsystem.analysis
 
 def plot_water_levels(station, dates, levels):
     plt.plot(dates, levels)
@@ -23,7 +23,7 @@ def plot_water_levels(station, dates, levels):
     plt.show()
 
 def plot_water_level_with_fit(station, dates, levels, p):
-    poly, d0 = analysis.polyfit(dates, levels, p)
+    poly, d0 = floodsystem.analysis.polyfit(dates, levels, p)
     fixed_dates = mpldates.date2num(dates)-d0
     fittedy = poly(fixed_dates)
     plt.plot(fixed_dates, levels)
