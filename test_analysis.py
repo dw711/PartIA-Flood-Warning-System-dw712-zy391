@@ -11,7 +11,7 @@ def test_polyfit_linear():
     # Create simple linear data (y = x)
     base_date = datetime.datetime(2023, 1, 1)
     dates = [base_date + datetime.timedelta(days=i) for i in range(5)]
-    levels = [1.0, 2.0, 3.0, 4.0, 5.0]
+    levels = [0.0, 1.0, 2.0, 3.0, 4.0]
     
     poly, d0 = polyfit(dates, levels, 1)
     
@@ -33,7 +33,7 @@ def test_polyfit_quadratic():
     # Create quadratic data (y = x^2)
     base_date = datetime.datetime(2023, 1, 1)
     dates = [base_date + datetime.timedelta(days=i) for i in range(5)]
-    levels = [1.0, 4.0, 9.0, 16.0, 25.0]
+    levels = [0.0, 1.0, 4.0, 9.0, 16.0]
     
     poly, d0 = polyfit(dates, levels, 2)
     
