@@ -13,6 +13,8 @@ def risk_level(station):
     """
     rel_level = station.relative_water_level()
     dates, levels = fetch_measure_levels(station.measure_id, dt=datetime.timedelta(days=2))
+    if len(levels) < 12:  # not enough for 12 readings
+        return "Low"  # gives auomatic low rating if not enough data to determine trend, as we don't want to give a high rating if we can't determine the trend
     if rel_level:
         if rel_level < 1.5:
             if np.average(levels[-6:]) > np.average(levels[-12:-6]): #i.e. the levels r rising
@@ -24,6 +26,7 @@ def risk_level(station):
                 return "Severe"
             else:
                 return "High"
+    return "Low"
 
 def run():
     stations = build_station_list()
@@ -47,7 +50,7 @@ def run():
 if __name__ == "__main__":
     print("Flood risk assessment by town")
     print("Criteria: relative water level thresholds (>= 1.5 = High/Severe, > 1.0 and < 1.5 = Low/Moderate)")
-    print("decision between the two is from the trend of water levels. i.e. High/Moderate if it's rising, using the past 6 readings vs the 6 before that")
+    print("Decision between the two is from the trend of water levels. i.e. High/Moderate if it's rising, using the past 6 readings vs the 6 before that")
     towns = run()
-    for town, risk in towns:
+    for town, risk in towns.items():
         print("The town:", town, "has risk:", risk)
