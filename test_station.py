@@ -59,3 +59,46 @@ def test_inconsistent_typical_range_stations():
     assert s2 in result
     assert s3 in result
     assert s1 not in result
+
+def test_relative_water_level():
+    """Test relative water level calculation"""
+    
+    # Normal case: water level within range
+    s1 = MonitoringStation("id1", "m1", "A", (0, 0), (1.0, 5.0), "River", "Town")
+    s1.latest_level = 3.0
+    assert s1.relative_water_level() == 0.5  # (3.0 - 1.0) / (5.0 - 1.0) = 0.5
+    
+    # Water level at low boundary
+    s2 = MonitoringStation("id2", "m2", "B", (0, 0), (1.0, 5.0), "River", "Town")
+    s2.latest_level = 1.0
+    assert s2.relative_water_level() == 0.0
+    
+    # Water level at high boundary
+    s3 = MonitoringStation("id3", "m3", "C", (0, 0), (1.0, 5.0), "River", "Town")
+    s3.latest_level = 5.0
+    assert s3.relative_water_level() == 1.0
+    
+    # Water level above range
+    s4 = MonitoringStation("id4", "m4", "D", (0, 0), (1.0, 5.0), "River", "Town")
+    s4.latest_level = 6.0
+    assert s4.relative_water_level() == 1.25
+    
+    # Water level below range
+    s5 = MonitoringStation("id5", "m5", "E", (0, 0), (1.0, 5.0), "River", "Town")
+    s5.latest_level = 0.0
+    assert s5.relative_water_level() == -0.25
+    
+    # No latest level data
+    s6 = MonitoringStation("id6", "m6", "F", (0, 0), (1.0, 5.0), "River", "Town")
+    s6.latest_level = None
+    assert s6.relative_water_level() is None
+    
+    # Inconsistent typical range (high < low)
+    s7 = MonitoringStation("id7", "m7", "G", (0, 0), (5.0, 1.0), "River", "Town")
+    s7.latest_level = 3.0
+    assert s7.relative_water_level() is None
+    
+    # None typical range
+    s8 = MonitoringStation("id8", "m8", "H", (0, 0), None, "River", "Town")
+    s8.latest_level = 3.0
+    assert s8.relative_water_level() is None
