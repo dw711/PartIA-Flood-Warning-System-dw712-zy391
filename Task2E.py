@@ -1,16 +1,21 @@
-from datetime import datetime, timedelta
-from floodsystem.stationdata import build_station_list
-import floodsystem.datafetcher
-import floodsystem.station
-import floodsystem.plot
+from floodsystem.stationdata import build_station_list, update_water_levels
+from floodsystem.flood import stations_highest_rel_level
+from floodsystem.datafetcher import fetch_measure_levels
+from floodsystem.plot import plot_water_levels
+import datetime
 
-def main():
-    datetoday = datetime.now()
+def run():
     stations = build_station_list()
-    for station in stations[:5]:
-        dates, levels = floodsystem.datafetcher.fetch_measure_levels(station.measure_id, timedelta(10))
-        floodsystem.plot.plot_water_levels(station, dates, levels)
+    update_water_levels(stations)
+    top5 = stations_highest_rel_level(stations, 5)  # list of (station, level) tuples
+
+    for station, _ in top5:
+        dates, levels = fetch_measure_levels(
+            station.measure_id, dt=datetime.timedelta(days=10)
+        )
+        if dates and levels:
+            plot_water_levels(station, dates, levels)
 
 
 if __name__ == "__main__":
-    main()
+    run()
