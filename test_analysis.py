@@ -24,7 +24,8 @@ def test_polyfit_linear():
     # Test that polynomial evaluates reasonably
     # For linear fit of y=x, at position 0 (first point) should be ~1.0
     assert isinstance(poly, np.poly1d)
-    assert poly == np.poly1d([1, 0])  # Should be y = 1*x + 0
+    # Compare coefficients with tolerance for floating-point accuracy
+    assert np.allclose(poly.c, [1, 0], atol=1e-5)  # Should be y = 1*x + 0
 
 
 def test_polyfit_quadratic():
@@ -40,7 +41,8 @@ def test_polyfit_quadratic():
     assert poly is not None
     assert d0 is not None
     assert isinstance(poly, np.poly1d)
-    assert poly == np.poly1d([1, 0, 0])  # Should be y = 1*x^2 + 0*x + 0
+    # Compare coefficients with tolerance for floating-point accuracy
+    assert np.allclose(poly.c, [1, 0, 0], atol=1e-5)  # Should be y = 1*x^2 + 0*x + 0
 
 
 def test_polyfit_constant():
@@ -56,7 +58,8 @@ def test_polyfit_constant():
     assert poly is not None
     assert d0 is not None
     assert isinstance(poly, np.poly1d)
-    assert poly == np.poly1d([3.0])  # Should be y = 3.0
+    # Compare coefficients with tolerance for floating-point accuracy
+    assert np.allclose(poly.c, [3.0], atol=1e-5)  # Should be y = 3.0
 
 
 def test_polyfit_single_point():
