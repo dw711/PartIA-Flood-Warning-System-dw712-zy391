@@ -12,6 +12,8 @@ def run():
 
     for station in top_5_stations:
         dates, levels = fetch_measure_levels(station[0].measure_id, dt=datetime.timedelta(days=2))
+        if not dates or not levels:
+            continue  # Skip if no data is available
         plot_water_level_with_fit(station[0], dates, levels, 4)
 
 if __name__ == "__main__":
