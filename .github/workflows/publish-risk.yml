@@ -1,0 +1,42 @@
+# Every 30 minutes: run the flood-risk assessment and publish site/risk.json
+# with GitHub Pages, so duowang.dev can show live numbers.
+# One-time setup: Settings → Pages → Build and deployment → Source: GitHub Actions.
+
+name: Publish flood risk
+
+on:
+  schedule:
+    - cron: "7,37 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install dependencies
+        run: pip install numpy matplotlib requests python-dateutil
+      - name: Assess flood risk
+        run: python publish_risk.py site/risk.json
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+      - id: deploy
+        uses: actions/deploy-pages@v4
